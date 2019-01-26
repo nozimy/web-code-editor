@@ -1,0 +1,53 @@
+extends managerlayout
+block seotitle
+title= 'Панель управления | Лавка'
+meta(name="keywords", content="Лавка, handmade, изделия ручной работы, мастер, ремесленник, рукоделие")
+block content
+    .content-wrapper
+      // Content Header (Page header)
+      section.content-header
+        h1.pull-left=file
+        a.btn.btn-primary.save(style="margin-left: 15px", data-file=file) Сохранить
+        ol.breadcrumb
+          li
+            a(href='#')
+              i.fa.fa-dashboard
+              |  Home
+          li.active Dashboard
+      // Main content
+      section.content
+        .row.maincontent
+          form
+              .col-md-12
+                .form-group
+                      label Исходный код
+                      div
+                          div#editor=content
+    script(type='text/javascript').
+        $(function() { 
+        $('.save').on('click', function() {
+        var file = $(this).data('file');
+        var content = editor.session.getValue();
+        $.ajax({
+        type: 'POST',
+        url: "/manager/editor",
+        data: { file: file, content: content},
+        success: function() {
+        alert('Saved');
+        }
+        });
+        })
+
+        $('#preview').on('change', function() {
+        $('.preview img').attr('src', $('#preview').val())
+        })
+        });
+    style.
+        #editor {
+            height: 600px;
+        }
+    script(src="//cdn.jsdelivr.net/ace/1.1.01/min/ace.js", type="text/javascript", charset="utf-8")
+    script.
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.session.setMode("ace/mode/jade");

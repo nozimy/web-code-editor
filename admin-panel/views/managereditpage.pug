@@ -1,0 +1,144 @@
+extends managerlayout
+block seotitle
+    title= 'Панель управления | Лавка'
+    meta(name="keywords", content="Лавка, handmade, изделия ручной работы, мастер, ремесленник, рукоделие")
+block content
+    script(src='//cdn.tinymce.com/4/tinymce.min.js')
+    script.
+      tinymce.init({
+      selector: '#bodyedit',
+      height: 500,
+      plugins: [
+      "advlist autolink lists link image charmap print preview anchor",
+      "searchreplace visualblocks code fullscreen",
+      "insertdatetime media table contextmenu paste imagetools"
+      ],
+      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+      imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+      content_css: [
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      '//www.tinymce.com/css/codepen.min.css'
+      ]
+      });
+    
+    
+    if (article)
+      .content-wrapper
+          // Content Header (Page header)
+          section.content-header
+            h1.pull-left
+              | Редактировать статью
+            a.btn.btn-primary.save(style="margin-left: 15px", data-articleid=''+article[0]._id) Сохранить
+            ol.breadcrumb
+              li
+                a(href='#')
+                  i.fa.fa-dashboard
+                  |  Home
+              li.active Dashboard
+          // Main content
+          section.content
+            .row.maincontent
+              form
+                  .col-md-6
+                    .form-group
+                      label Заголовок
+                      input.form-control#title(type='text', name='title' value=article[0].pagetitle)
+                  .col-md-6
+                    .form-group
+                      label Псевдоним
+                      input.form-control#alias(type='text', name='alias' value=article[0].alias)
+                  .col-md-12
+                    .form-group
+                          label Исходный код (HTML)
+                          div
+                              div#editor=article[0].source
+                                
+                  .col-md-12
+                      .form-group
+                          label Контент 
+                            pre [[$content]]
+                          div
+                              textarea#bodyedit(style='width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;')=article[0].content
+    else
+      .content-wrapper
+          // Content Header (Page header)
+          section.content-header
+            h1.pull-left
+              | Новая страница
+            a.btn.btn-primary.save(style="margin-left: 15px") Сохранить
+            ol.breadcrumb
+              li
+                a(href='#')
+                  i.fa.fa-dashboard
+                  |  Home
+              li.active Dashboard
+          // Main content
+          section.content
+            .row.maincontent
+              form
+                  .col-md-6
+                    .form-group
+                      label Заголовок
+                      input.form-control#title(type='text', name='title')
+                  .col-md-6
+                    .form-group
+                      label Псевдоним
+                      input.form-control#alias(type='text', name='alias')
+                  .col-md-12
+                    .form-group
+                          label Исходный код (HTML)
+                          div
+                              div#editor
+                                
+                  .col-md-12
+                      .form-group
+                          label Контент 
+                            pre [[$content]]
+                          div
+                              textarea#bodyedit(style='width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;')
+    script(type='text/javascript').
+            $(function() { 
+            $('.save').on('click', function() {
+            var title = $('#title').val();
+            var body = tinyMCE.activeEditor.getContent();
+            var source = editor.session.getValue();
+            //source = source.replace('[[$content]]', body)
+            var alias = $('#alias').val();
+            var pageid = $(this).data('articleid');
+            if (pageid) {
+              console.log(source);
+              $.ajax({
+              type: 'POST',
+              url: "/manager/pages/save",
+              data: {id: pageid, alias: alias, title: title, body: body, source: source },
+              success: function() {
+              alert('Saved');
+              }
+              });
+            } else {
+            console.log(source);
+            
+            $.ajax({
+            type: 'POST',
+            url: "/manager/pages",
+            data: { alias: alias, title: title, body: body, source: source },
+            success: function() {
+            alert('Saved');
+            }
+            });
+            }
+            })
+
+            $('#preview').on('change', function() {
+            $('.preview img').attr('src', $('#preview').val())
+            })
+            });
+    style.
+        #editor {
+            height: 600px;
+        }
+    script(src="//cdn.jsdelivr.net/ace/1.1.01/min/ace.js", type="text/javascript", charset="utf-8")
+    script.
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.session.setMode("ace/mode/html");

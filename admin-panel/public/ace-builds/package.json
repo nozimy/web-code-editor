@@ -1,0 +1,25 @@
+{
+  "name": "ace-builds",
+  "version": "1.2.6",
+  "description": "Ace (Ajax.org Cloud9 Editor)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajaxorg/ace-builds.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/ajaxorg/ace-builds/issues"
+  },
+  "homepage": "https://github.com/ajaxorg/ace-builds",
+  "gitHead": "784ffa862c5351e0d300370f61471b1eb95ebcf1",
+  "readme": "Ace (Ajax.org Cloud9 Editor)\n============================\n[![CDNJS](https://img.shields.io/cdnjs/v/ace.svg)](https://cdnjs.com/libraries/ace)\n\nAce is a code editor written in JavaScript.\n\nThis repository has only generated files.\nIf you want to work on ace please go to https://github.com/ajaxorg/ace instead.\n\n\nhere you can find pre-built files for convenience of embedding.\nit contains 4 versions\n * [src](https://github.com/ajaxorg/ace-builds/tree/master/src)              concatenated but not minified\n * [src-min](https://github.com/ajaxorg/ace-builds/tree/master/src-min)      concatenated and minified with uglify.js\n * [src-noconflict](https://github.com/ajaxorg/ace-builds/tree/master/src-noconflict)      uses ace.require instead of require\n * [src-min-noconflict](https://github.com/ajaxorg/ace-builds/tree/master/src-min-noconflict)      concatenated, minified with uglify.js, and uses ace.require instead of require\n\n\nFor a simple way of embedding ace into webpage see [editor.html](https://github.com/ajaxorg/ace-builds/blob/master/editor.html) or list of other [simple examples](https://github.com/ajaxorg/ace-builds/tree/master/demo)\nTo see ace in action go to [kitchen-sink-demo](http://ajaxorg.github.com/ace-builds/kitchen-sink.html), [scrollable-page-demo](http://ajaxorg.github.com/ace-builds/demo/scrollable-page.html) or [minimal demo](http://ajaxorg.github.com/ace-builds/editor.html),\n\n\n",
+  "readmeFilename": "README.md",
+  "_id": "ace-builds@1.2.6",
+  "_shasum": "6a97c99a2549ff6a5393c3c770a6a77f1748fe1c",
+  "_from": "git+https://github.com/ajaxorg/ace-builds.git",
+  "_resolved": "git+https://github.com/ajaxorg/ace-builds.git#784ffa862c5351e0d300370f61471b1eb95ebcf1"
+}
